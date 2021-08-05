@@ -57,6 +57,8 @@ class aligner final
     std::string::iterator quality_seq_b{};
     bool aligning_started{false};
 
+    std::string read_name;
+
     const int quality_threshold{0};
 
     const bool ambig{false};

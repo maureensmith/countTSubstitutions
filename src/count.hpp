@@ -43,7 +43,7 @@ class counter_1 final
     void count(const char base);
 
 
-    void add_read();
+    void add_read(const std::string& name);
 
     void write_to_file(const std::string& out_file);
 
@@ -55,6 +55,7 @@ class counter_1 final
     //std::vector<std::vector<count_type>> data;
     // vector containing A, C, G, T
     std::vector<std::vector<count_type>> T_data;
+    std::vector<std::string> read_names;
 //    std::vector<count_type> num_T;
 //    std::vector<count_type> num_TtoA;
 //    std::vector<count_type> num_TtoC;

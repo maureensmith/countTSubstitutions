@@ -37,6 +37,8 @@ namespace aligner
             return false;
         }
 
+        read_name = utils::extract_read_name(line_a);
+
         if(!aligner::prepare(line_a)) {
             return false;
         }
@@ -118,7 +120,7 @@ void aligner::align(count::counter_1& count_obj)
     aligning_started = false;
 
     // Add new count vector to vector
-    count_obj.add_read();
+    count_obj.add_read(read_name);
 
     while (cigar_it_a not_eq cigar_end_a)
     {

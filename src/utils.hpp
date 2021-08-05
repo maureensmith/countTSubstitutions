@@ -38,6 +38,8 @@ std::string::iterator find_tab_in_string(std::string::iterator it)
     return it;
 }
 
+    std::string extract_read_name(const std::string& line);
+
 inline bool check_readpair_names(std::string::iterator it_a, std::string::iterator it_b) {
     while(*it_a != '\t') {
         if(*it_a != *it_b) {
