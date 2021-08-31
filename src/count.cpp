@@ -34,37 +34,44 @@ namespace count
         ++T_data.back()[nucleotide::nucleobase{base}.to_id()];
     }
 
-    void counter_1::add_read(const std::string& name) {
+    void counter_1::add_read(const std::string& name, const count_type sp) {
         read_names.emplace_back(name);
+        start_pos.emplace_back(sp);
+        total_T.emplace_back(0);
         T_data.emplace_back(std::vector<count_type>(nucleobase_count));
     }
 
-void counter_1::write_to_file(const std::string& out_file)
-{
-    std::cout << "\nWriting counts to " << out_file << std::endl;
-    std::ofstream outfile(out_file);
+    void counter_1::increment_T_in_ref() {
+        assert(not total_T.empty());
+        ++total_T.back();
+    }
 
-    if (outfile.good())
+    void counter_1::write_to_file(const std::string& out_file)
     {
-        //iterate header through valid symbols (also for ambiguous)
-        outfile << "readName";
-        for(int i = 0; i<nucleotide::numberOfValidSymbols(ambig); ++i) {
-            outfile << "\t" << nucleotide::nucleobase{i}.get();
-        }
-        outfile << "\n";
-        std::cout << "number of sequences " << T_data.size() << std::endl;
-        for (unsigned i = 0; i < T_data.size(); ++i)
+        std::cout << "\nWriting counts to " << out_file << std::endl;
+        std::ofstream outfile(out_file);
+
+        if (outfile.good())
         {
-            outfile << read_names[i];
-            //std::for_each(data[i].cbegin(), data[i].cend(), [&outfile](const auto& entry)
-            std::for_each(T_data[i].cbegin(), T_data[i].cend(), [&outfile](const auto& entry)
+            //iterate header through valid symbols (also for ambiguous)
+            outfile << "readName" << "\t" << "startPos" << "\t" << "totalT";
+            for(int i = 0; i<nucleotide::numberOfValidSymbols(ambig); ++i) {
+                outfile << "\t" << nucleotide::nucleobase{i}.get();
+            }
+            outfile << "\n";
+            std::cout << "number of sequences " << T_data.size() << std::endl;
+            for (unsigned i = 0; i < T_data.size(); ++i)
             {
-                outfile << '\t' << entry;
-            });
-            outfile << '\n';
+                outfile << read_names[i] << '\t' << start_pos[i] << "\t" << total_T[i];
+                //std::for_each(data[i].cbegin(), data[i].cend(), [&outfile](const auto& entry)
+                std::for_each(T_data[i].cbegin(), T_data[i].cend(), [&outfile](const auto& entry)
+                {
+                    outfile << '\t' << entry;
+                });
+                outfile << '\n';
+            }
         }
     }
-}
 
 }
 

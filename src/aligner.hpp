@@ -58,7 +58,7 @@ class aligner final
     bool aligning_started{false};
 
     std::string read_name;
-
+    
     const int quality_threshold{0};
 
     const bool ambig{false};

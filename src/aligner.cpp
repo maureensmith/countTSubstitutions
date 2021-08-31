@@ -119,8 +119,8 @@ void aligner::align(count::counter_1& count_obj)
 {
     aligning_started = false;
 
-    // Add new count vector to vector
-    count_obj.add_read(read_name);
+    // Add new count vector to vector. Always use posinref of the "first" read pair as orientation for the amplicons
+    count_obj.add_read(read_name, posinref_a);
 
     while (cigar_it_a not_eq cigar_end_a)
     {
@@ -146,6 +146,7 @@ void aligner::align(count::counter_1& count_obj)
 //                {
                 if(ref_base == 'T') {
                     read.add({posinref_a, nucleotide::nucleobase{base}});
+                    count_obj.increment_T_in_ref();
                 }
                 ++posinref_a;
                 ++read_seq_a;
@@ -229,10 +230,15 @@ void aligner::align_1(count::counter_1& count_obj)
 //                            count_obj.count(posinref_b - 1,base);
                             count_obj.count(base);
                         }
+
+                        // and increment the number of wild type T in the reference
+                        count_obj.increment_T_in_ref();
                     }
                     else
                     {
-                        //overlapping: if the bases are equal-> ignore (will be counted later,
+
+                        //overlapping:
+                        //if the bases are equal-> ignore (will be counted later,
                         //as already stored in the read)
                         //if (pos->second.get() not_eq base or base=='N' or pos->second.get()=='N')
                         if(pos->second.get() not_eq base or !nucleotide::isValidNucl(base, ambig)

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(countTSubstitutions)
+#project(countTSubstitutions)
 # Project name and a few useful settings. Other commands can pick up the results
 project(countTSubstitutions
         VERSION 1.0

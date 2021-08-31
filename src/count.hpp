@@ -30,6 +30,8 @@ class counter_1 final
     {
     }
 
+    void increment_T_in_ref();
+
     void count(const ref::ref_map& read);
 
     void count(const ref::ref_map& read, const unsigned times);
@@ -43,7 +45,7 @@ class counter_1 final
     void count(const char base);
 
 
-    void add_read(const std::string& name);
+    void add_read(const std::string& name, const count_type sp);
 
     void write_to_file(const std::string& out_file);
 
@@ -56,6 +58,8 @@ class counter_1 final
     // vector containing A, C, G, T
     std::vector<std::vector<count_type>> T_data;
     std::vector<std::string> read_names;
+    std::vector<count_type> total_T;
+    std::vector<count_type> start_pos;
 //    std::vector<count_type> num_T;
 //    std::vector<count_type> num_TtoA;
 //    std::vector<count_type> num_TtoC;
