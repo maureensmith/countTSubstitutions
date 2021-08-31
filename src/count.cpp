@@ -54,7 +54,7 @@ namespace count
         if (outfile.good())
         {
             //iterate header through valid symbols (also for ambiguous)
-            outfile << "readName" << "\t" << "startPos" << "\t" << "totalT";
+            outfile << "readName" << "\t" << "startPos" << "\t" << "totalRefT";
             for(int i = 0; i<nucleotide::numberOfValidSymbols(ambig); ++i) {
                 outfile << "\t" << nucleotide::nucleobase{i}.get();
             }
