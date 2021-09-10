@@ -19,7 +19,7 @@ namespace utils
 
     std::string extract_read_name(const std::string& line) {
         std::size_t tabPos = line.find('\t');
-        return(line.substr(0,tabPos-1));
+        return(line.substr(0,tabPos));
     }
 
 
