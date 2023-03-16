@@ -62,8 +62,10 @@ namespace io_tools {
 
     std::string get_first_data_line(std::ifstream &stream) {
         std::string line;
-        do {
-            std::getline(stream, line);
+        do { 
+            if(stream.good()) {
+                std::getline(stream, line);
+            }
         } while (line[0] == '@');
 
         return line;

@@ -29,45 +29,19 @@ namespace
 
         aligner::aligner aligner{reference, read, qualityThreshold};
 
-        // record to time for each step
-        unsigned prep = 0;
-        unsigned align_a = 0;
-        unsigned align_b = 0;
-        unsigned count = 0;
 
         unsigned readCount = 0;
 
-        while (input_a.good() and input_b.good()) {
+        do {
             read.clear();
-            auto now = std::chrono::high_resolution_clock::now();
             const auto is_prepared = aligner.prepare(line_a, line_b);
-            auto diff = std::chrono::duration_cast<std::chrono::nanoseconds>(
-                    std::chrono::high_resolution_clock::now() - now);
-            prep += diff.count();
+
             if (is_prepared) {
-                now = std::chrono::high_resolution_clock::now();
-
                 aligner.align(counter);
-
-                diff = std::chrono::duration_cast<std::chrono::nanoseconds>(
-                        std::chrono::high_resolution_clock::now() - now);
-                align_a += diff.count();
-
-                now = std::chrono::high_resolution_clock::now();
 
                 aligner.align_1(counter);
 
-                diff = std::chrono::duration_cast<std::chrono::nanoseconds>(
-                        std::chrono::high_resolution_clock::now() - now);
-                align_b += diff.count();
-
-                now = std::chrono::high_resolution_clock::now();
-
                 counter.count(read);
-
-                diff = std::chrono::duration_cast<std::chrono::nanoseconds>(
-                        std::chrono::high_resolution_clock::now() - now);
-                count += diff.count();
             }
 
             // status of processed reads
@@ -77,14 +51,12 @@ namespace
 
             std::getline(input_a, line_a);
             std::getline(input_b, line_b);
-        }
+        } while (input_a.good() and input_b.good());
+        
+
+        std::cout << "Total read count: " << readCount << std::endl;
 
         counter.write_to_file(out_file);
-        std::cout << "Total read count: " << readCount << std::endl;
-        std::cout << "Time to Prepare: " << prep << std::endl;
-        std::cout << "Time to Align A: " << align_a << std::endl;
-        std::cout << "Time to Align B: " << align_b << std::endl;
-        std::cout << "Time Counting: " << count << std::endl;
     }
 
 }

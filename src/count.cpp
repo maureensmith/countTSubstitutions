@@ -59,7 +59,7 @@ namespace count
                 outfile << "\t" << nucleotide::nucleobase{i}.get();
             }
             outfile << "\n";
-            std::cout << "number of sequences " << T_data.size() << std::endl;
+            std::cout << "Number of properly mapped sequences counted " << T_data.size()  << "\n" << std::endl;
             for (unsigned i = 0; i < T_data.size(); ++i)
             {
                 outfile << read_names[i] << '\t' << start_pos[i] << "\t" << total_T[i];
